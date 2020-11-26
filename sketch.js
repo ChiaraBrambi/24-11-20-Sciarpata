@@ -1,9 +1,9 @@
 //trombetta ICONE
-let sciarpaIcon, sciarpaBIcon, tutIcon, logor, freccia; //icone
+let sciarpaIcon, sciarpaBIcon, tut1Icon, tut2Icon, logor, freccia; //icone
 let xBarra = 20; //lunghezza barra %
 let w, h; //posizione
 let s = 0; //ellisse BONUS
-let tracciaS;
+let tracciaS, sAlta, sBassa;
 
 //variabile suono trombetta
 let alt = 1; //h dei rettangoli suono
@@ -21,10 +21,13 @@ let pronto //coordinzaione tutorial
 function preload() {
   sciarpaBIcon = loadImage("./assets/immagini/sciarpaB.png"); //sciarpa chiara
   sciarpaIcon = loadImage("./assets/immagini/sciarpa.png"); //sciarpa scura
-  tutIcon = loadImage("./assets/immagini/Tutorial_Sciarpata.gif"); //trombetta tutorial 1
+  tut1Icon = loadImage("./assets/immagini/Tutorial_Down.gif");
+  tut2Icon = loadImage("./assets/immagini/Tutorial_Up.gif");
   logor = loadImage("./assets/immagini/logopiccolo.png"); //logo ridotto
   freccia = loadImage("./assets/immagini/freccia.png");
   tracciaS = loadImage("./assets/immagini/sciarpaTraccia.png");
+  sAlta = loadImage("./assets/immagini/Sciarpata_Up.gif");
+  sBAssa = loadImage("./assets/immagini/Sciarpata_Down.gif");
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -117,17 +120,20 @@ function draw() {
   }
 
   // BARRETTE FEED UTENTE (LINETTE)
-  if (keyIsDown(ENTER)) {
-    alt = 1 * random(1, 8.5);
+  if (keyIsDown(ENTER)) {//alza la sciarpa
     input_utente = 200;
-    //traccia
-    image(tracciaS, width / 2, height / 2, tracciaS.width , tracciaS.height );
+    image(sAlta, width / 2, height / 2, sAlta.width/1.4 , sAlta.height/1.4 );
+  } else if (keyIsDown( DOWN_ARROW)) {//abbassa la sciarpa
+    alt = 1;
+    input_utente = 0;
+    image(sBAssa, width / 2, height / 2, sBAssa.width/1.4 , sBAssa.height/1.4 );
   } else {
     alt = 1;
     input_utente = 0;
-    //traccia
-    image(tracciaS, width / 2, height / 2, tracciaS.width , tracciaS.height );
+  //  image(tracciaS, width / 2, height / 2, tracciaS.width/1.4 , tracciaS.height/1.4 );
   }
+
+
 
   //PER LA BARRA DELLA PERCENTUALE
   if (keyIsDown(ENTER)) {
@@ -155,6 +161,7 @@ function draw() {
     image(sciarpaBIcon, w * 10 + 5, h * 24.5, sciarpaBIcon.width / 7, sciarpaBIcon.height / 7);
     pop();
     feed_piattaforma++;
+    image(tracciaS, w*10-5, h*25, tracciaS.width/1.4 , tracciaS.height/1.4 );
   } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
     push();
     fill('#F9F9F9');
@@ -164,6 +171,7 @@ function draw() {
     image(sciarpaIcon, w * 10 + 5, h * 24.5, sciarpaIcon.width / 7, sciarpaIcon.height / 7); // trombetta scura
     pop();
     feed_piattaforma = 0;
+    image(tracciaS, w*10-5, h*24.5, tracciaS.width/1.4 , tracciaS.height/1.4 );
   }
 
   //rettangolo in opacità
@@ -179,13 +187,15 @@ function draw() {
 
   //TUTORIAL sciarpa
   if (i == 0 || i == 2) {
-    image(tutIcon, w * 10, h * 24.5, tutIcon.width / 4, tutIcon.height / 4);
-    //text('SOLLEVA LA SCIARPA ', w * 10, h * 33);
-    text('Unisciti al ritmo degli altri', w * 10, h * 31);
+    image(tut2Icon, w * 10, h * 24.5, tut2Icon.width / 4, tut2Icon.height / 4);
+    text('PORTA IN ALTO' , w * 10, h * 31.5);
+    text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
+    image(sAlta, width / 2, height / 2, sAlta.width/1.4 , sAlta.height/1.4 );
   } else if (i == 1 || i == 3) {
-    image(tutIcon, w * 10, h * 24.5, tutIcon.width / 4, tutIcon.height / 4);
-    text('SOLLEVA LA SCIARPA' , w * 10, h * 33);
-    text('Unisciti al ritmo degli altri', w * 10, h * 31);
+    image(tut1Icon, w * 10, h * 24.5, tut1Icon.width / 4, tut1Icon.height / 4);
+    text('PORTA IN BASSO', w * 10, h * 31.5);
+    text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
+    image(sBAssa, width / 2, height / 2, sBAssa.width/1.4 , sBAssa.height/1.4 );
   }
 
 }
