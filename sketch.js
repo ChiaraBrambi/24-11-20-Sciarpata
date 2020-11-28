@@ -1,9 +1,8 @@
 //trombetta ICONE
-let sciarpaIcon, sciarpaBIcon, tut1Icon, tut2Icon, logor, freccia; //icone
+let sciarpaIcon, sciarpaBIcon, tut1Icon, tut2Icon, logor, freccia, sAlta, sBassa;; //icone
 let xBarra = 20; //lunghezza barra %
 let w, h; //posizione
 let s = 0; //ellisse BONUS
-let tracciaS, sAlta, sBassa;
 
 //variabile suono trombetta
 let alt = 1; //h dei rettangoli suono
@@ -25,7 +24,6 @@ function preload() {
   tut2Icon = loadImage("./assets/immagini/Tutorial_Up.gif");
   logor = loadImage("./assets/immagini/logopiccolo.png"); //logo ridotto
   freccia = loadImage("./assets/immagini/freccia.png");
-  tracciaS = loadImage("./assets/immagini/sciarpaTraccia.png");
   sAlta = loadImage("./assets/immagini/Sciarpa_su.png");
   sBassa = loadImage("./assets/immagini/Sciarpa_giù.png");
 }
@@ -122,11 +120,13 @@ function draw() {
   // BARRETTE FEED UTENTE (LINETTE)
   if (keyIsDown(ENTER)) {//alza la sciarpa
     input_utente = 200;
-    image(sAlta, width / 2, height / 2, sAlta.width/3 , sAlta.height/3 );
+    image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
+    image(sAlta, width / 2, height / 2-10, sAlta.width/3 , sAlta.height/3 );
   } else {//abbassa la sciarpa
     alt = 1;
     input_utente = 0;
   image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
+  image(sAlta, width / 2, height / 2, sAlta.width/3 , sAlta.height/3 );
   }
 
 
@@ -165,7 +165,7 @@ function draw() {
     image(sciarpaIcon, w * 10 + 5, h * 24.5, sciarpaIcon.width / 7, sciarpaIcon.height / 7); // trombetta scura
     pop();
     feed_piattaforma = 0;
-    
+
   }
 
   //rettangolo in opacità
