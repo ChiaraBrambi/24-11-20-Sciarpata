@@ -26,8 +26,8 @@ function preload() {
   logor = loadImage("./assets/immagini/logopiccolo.png"); //logo ridotto
   freccia = loadImage("./assets/immagini/freccia.png");
   tracciaS = loadImage("./assets/immagini/sciarpaTraccia.png");
-  sAlta = loadImage("./assets/immagini/Sciarpata_Up.gif");
-  sBAssa = loadImage("./assets/immagini/Sciarpata_Down.gif");
+  sAlta = loadImage("./assets/immagini/Sciarpa_su.png");
+  sBassa = loadImage("./assets/immagini/Sciarpa_giù.png");
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -122,17 +122,12 @@ function draw() {
   // BARRETTE FEED UTENTE (LINETTE)
   if (keyIsDown(ENTER)) {//alza la sciarpa
     input_utente = 200;
-    image(sAlta, width / 2, height / 2, sAlta.width/1.4 , sAlta.height/1.4 );
-  } else if (keyIsDown( DOWN_ARROW)) {//abbassa la sciarpa
+    image(sAlta, width / 2, height / 2, sAlta.width/3 , sAlta.height/3 );
+  } else {//abbassa la sciarpa
     alt = 1;
     input_utente = 0;
-    image(sBAssa, width / 2, height / 2, sBAssa.width/1.4 , sBAssa.height/1.4 );
-  } else {
-    alt = 1;
-    input_utente = 0;
-  //  image(tracciaS, width / 2, height / 2, tracciaS.width/1.4 , tracciaS.height/1.4 );
+  image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
   }
-
 
 
   //PER LA BARRA DELLA PERCENTUALE
@@ -161,7 +156,6 @@ function draw() {
     image(sciarpaBIcon, w * 10 + 5, h * 24.5, sciarpaBIcon.width / 7, sciarpaBIcon.height / 7);
     pop();
     feed_piattaforma++;
-    image(tracciaS, w*10-5, h*25, tracciaS.width/1.4 , tracciaS.height/1.4 );
   } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
     push();
     fill('#F9F9F9');
@@ -171,7 +165,7 @@ function draw() {
     image(sciarpaIcon, w * 10 + 5, h * 24.5, sciarpaIcon.width / 7, sciarpaIcon.height / 7); // trombetta scura
     pop();
     feed_piattaforma = 0;
-    image(tracciaS, w*10-5, h*24.5, tracciaS.width/1.4 , tracciaS.height/1.4 );
+    
   }
 
   //rettangolo in opacità
@@ -190,12 +184,12 @@ function draw() {
     image(tut2Icon, w * 10, h * 24.5, tut2Icon.width / 4, tut2Icon.height / 4);
     text('PORTA IN ALTO' , w * 10, h * 31.5);
     text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
-    image(sAlta, width / 2, height / 2, sAlta.width/1.4 , sAlta.height/1.4 );
+    image(sAlta, width / 2, height / 2, sAlta.width/3 , sAlta.height/3 );
   } else if (i == 1 || i == 3) {
-    image(tut1Icon, w * 10, h * 24.5, tut1Icon.width / 4, tut1Icon.height / 4);
+    image(tut1Icon, w * 10, h * 24.5, tut1Icon.width / 4, tut1Icon.height /4);
     text('PORTA IN BASSO', w * 10, h * 31.5);
     text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
-    image(sBAssa, width / 2, height / 2, sBAssa.width/1.4 , sBAssa.height/1.4 );
+    image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
   }
 
 }
