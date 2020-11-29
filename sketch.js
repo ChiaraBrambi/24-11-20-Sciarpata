@@ -18,8 +18,8 @@ let pronto //coordinzaione tutorial
 /////////////////////////////////////////////////////////////////////////
 
 function preload() {
-  sciarpaBIcon = loadImage("./assets/immagini/sciarpaB.png"); //sciarpa chiara
-  sciarpaIcon = loadImage("./assets/immagini/sciarpa.png"); //sciarpa scura
+  sciarpaBIcon = loadImage("./assets/immagini/sciarpa.png"); //sciarpa chiara
+  sciarpaIcon = loadImage("./assets/immagini/sciarpaViola.png"); //sciarpa scura
   tut1Icon = loadImage("./assets/immagini/Tutorial_Down.gif");
   tut2Icon = loadImage("./assets/immagini/Tutorial_Up.gif");
   logor = loadImage("./assets/immagini/logopiccolo.png"); //logo ridotto
@@ -148,24 +148,13 @@ function draw() {
   fill('#B7AEB5'); //3 PALETTE
   //ICONA FEEDBACK DA SEGUIRE
   if (i % 2 != 0 && i > 3) {
-    push();
-    fill('#877B85');
-    noStroke();
-    strokeWeight(5);
-    ellipse(w * 10, h * 24.5, 100); //cerchio centrale
-    image(sciarpaBIcon, w * 10 + 5, h * 24.5, sciarpaBIcon.width / 7, sciarpaBIcon.height / 7);
-    pop();
-    feed_piattaforma++;
-  } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
-    push();
-    fill('#F9F9F9');
-    stroke('#877B85');
-    strokeWeight(5);
-    ellipse(w * 10, h * 24.5, 100); //cerchio centrale
-    image(sciarpaIcon, w * 10 + 5, h * 24.5, sciarpaIcon.width / 7, sciarpaIcon.height / 7); // trombetta scura
-    pop();
-    feed_piattaforma = 0;
+  image(sciarpaBIcon, w * 10 , h * 25, sciarpaBIcon.width / 6, sciarpaBIcon.height / 6);
+  feed_piattaforma++;
 
+  } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
+
+    image(sciarpaIcon, w * 10 , h * 25, sciarpaIcon.width / 6, sciarpaIcon.height / 6); // trombetta scura
+    feed_piattaforma = 0;
   }
 
   //rettangolo in opacità
