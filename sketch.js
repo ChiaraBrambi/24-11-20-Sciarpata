@@ -88,23 +88,31 @@ function draw() {
 
   //pallini BONUS
   for (let i = 0; i < 6; i++) {
-    if (contBonus === 2 || contBonus === 3) {
+    if (contBonus === 3 || contBonus === 4 ||contBonus === 5) {
       push();
       fill('#877B85');
       ellipse(w, h * 45.5, 15);
       pop();
-    } else if (contBonus === 4 || contBonus === 5 || contBonus === 6 || contBonus === 7) {
+    } else if (contBonus === 6 || contBonus === 7 || contBonus === 8 ) {
       push();
       fill('#877B85');
       ellipse(w, h * 45.5, 15);
       ellipse(w + 25, h * 45.5, 15);
       pop();
-    } else if (contBonus === 8 || contBonus === 9) {
+    } else if (contBonus === 9 || contBonus === 10 || contBonus === 11 || contBonus === 12 || contBonus === 13) {
       push();
       fill('#877B85');
       ellipse(w, h * 45.5, 15);
       ellipse(w + 25, h * 45.5, 15);
       ellipse(w + 50, h * 45.5, 15);
+      pop();
+    } else if (contBonus === 14 || contBonus === 15 || contBonus === 16 || contBonus === 17 || contBonus === 18) {
+      push();
+      fill('#877B85');
+      ellipse(w, h * 45.5, 15);
+      ellipse(w + 25, h * 45.5, 15);
+      ellipse(w + 50, h * 45.5, 15);
+      ellipse(w + 75, h * 45.5, 15);
       pop();
     }
     ellipse(w + s, h * 45.5, 15);
