@@ -144,7 +144,7 @@ function draw() {
   if (keyIsDown(ENTER) && i % 2 != 0) {//alza la sciarpa
     input_utente = 200;
     push();
-    tint(255, p_coord*3); // Display at half opacity
+    tint(255, p_coord*3.5); // Display at half opacity
     image(sAlta, width / 2, height / 2, sAlta.width/3 , sAlta.height/3 );
     pop();
   } else if(keyIsDown(ENTER) && i % 2 == 0){//abbassa la sciarpa
