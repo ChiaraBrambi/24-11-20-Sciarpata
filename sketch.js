@@ -18,8 +18,8 @@ let pronto //coordinzaione tutorial
 /////////////////////////////////////////////////////////////////////////
 
 function preload() {
-  sciarpaBIcon = loadImage("./assets/immagini/sciarpa.png"); //sciarpa chiara
-  sciarpaIcon = loadImage("./assets/immagini/sciarpaViola.png"); //sciarpa scura
+  sciarpaBIcon = loadImage("./assets/immagini/sciarpaViola.png"); //sciarpa scura piena
+  sciarpaIcon = loadImage("./assets/immagini/sciarpa.png"); //sciarpa vuota di base
   tut1Icon = loadImage("./assets/immagini/Tutorial_Down.gif");
   tut2Icon = loadImage("./assets/immagini/Tutorial_Up.gif");
   logor = loadImage("./assets/immagini/logopiccolo.png"); //logo ridotto
@@ -117,21 +117,9 @@ function draw() {
     i++
   }
 
-  // BARRETTE FEED UTENTE (LINETTE)
-  if (keyIsDown(ENTER)) {//alza la sciarpa
-    input_utente = 200;
-    image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
-    image(sAlta, width / 2, height / 2-10, sAlta.width/3 , sAlta.height/3 );
-  } else {//abbassa la sciarpa
-    alt = 1;
-    input_utente = 0;
-  image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
-  image(sAlta, width / 2, height / 2, sAlta.width/3 , sAlta.height/3 );
-  }
-
 
   //PER LA BARRA DELLA PERCENTUALE
-  if (keyIsDown(ENTER)) {
+  if (keyIsDown(ENTER) && i % 2 != 0) {
     p_coord = round((feed_piattaforma * input_utente) / 100);
   } else {
     p_coord = 0;
@@ -144,15 +132,29 @@ function draw() {
   text('COORDINAZIONE  ' + p_coord + ' %', w * 10, h * 43);
   pop();
 
+  // BARRETTE FEED UTENTE (LINETTE)
+  if (keyIsDown(ENTER) && i % 2 != 0) {//alza la sciarpa
+    input_utente = 200;
+    push();
+    tint(255, p_coord*3); // Display at half opacity
+    image(sAlta, width / 2, height / 2, sAlta.width/3 , sAlta.height/3 );
+    pop();
+  } else if(keyIsDown(ENTER) && i % 2 == 0){//abbassa la sciarpa
+    input_utente = 0;
+    image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
+  }else{
+    input_utente = 0;
+    image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
+  }
+
+
   textSize(16);
   fill('#B7AEB5'); //3 PALETTE
   //ICONA FEEDBACK DA SEGUIRE
   if (i % 2 != 0 && i > 3) {
-  image(sciarpaBIcon, w * 10 , h * 25, sciarpaBIcon.width / 6, sciarpaBIcon.height / 6);
+  image(sciarpaBIcon, w * 10 , h * 25, sciarpaBIcon.width / 6, sciarpaBIcon.height / 6);//scura
   feed_piattaforma++;
-
   } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
-
     image(sciarpaIcon, w * 10 , h * 25, sciarpaIcon.width / 6, sciarpaIcon.height / 6); // trombetta scura
     feed_piattaforma = 0;
   }
