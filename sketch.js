@@ -18,8 +18,8 @@ let pronto //coordinzaione tutorial
 /////////////////////////////////////////////////////////////////////////
 
 function preload() {
-  sciarpaBIcon = loadImage("./assets/immagini/sciarpaViola.png"); //sciarpa scura piena
-  sciarpaIcon = loadImage("./assets/immagini/sciarpa.png"); //sciarpa vuota di base
+  sciarpaBIcon = loadImage("./assets/immagini/sciarpa.png"); //sciarpa vuota bianca
+  sciarpaIcon = loadImage("./assets/immagini/sciarpaViola.png"); //sciarpa scura
   tut1Icon = loadImage("./assets/immagini/Tutorial_Down.gif");
   tut2Icon = loadImage("./assets/immagini/Tutorial_Up.gif");
   logor = loadImage("./assets/immagini/logopiccolo.png"); //logo ridotto
@@ -83,17 +83,16 @@ function draw() {
 
   if (p_coord === 80) {
     contBonus++;
-  }
-  console.log('BONUS CONTATOR:' + contBonus);
+  } //console.log('BONUS CONTATOR:' + contBonus);
 
   //pallini BONUS
   for (let i = 0; i < 6; i++) {
-    if (contBonus === 3 || contBonus === 4 ||contBonus === 5) {
+    if (contBonus === 3 || contBonus === 4 || contBonus === 5) {
       push();
       fill('#877B85');
       ellipse(w, h * 45.5, 15);
       pop();
-    } else if (contBonus === 6 || contBonus === 7 || contBonus === 8 ) {
+    } else if (contBonus === 6 || contBonus === 7 || contBonus === 8) {
       push();
       fill('#877B85');
       ellipse(w, h * 45.5, 15);
@@ -125,9 +124,8 @@ function draw() {
     i++
   }
 
-
   //PER LA BARRA DELLA PERCENTUALE
-  if (keyIsDown(ENTER) && i % 2 != 0) {
+  if (keyIsDown(ENTER) && i % 2 == 0) {
     p_coord = round((feed_piattaforma * input_utente) / 100);
   } else {
     p_coord = 0;
@@ -140,31 +138,18 @@ function draw() {
   text('COORDINAZIONE  ' + p_coord + ' %', w * 10, h * 43);
   pop();
 
-  // BARRETTE FEED UTENTE (LINETTE)
-  if (keyIsDown(ENTER) && i % 2 != 0) {//alza la sciarpa
-    input_utente = 200;
-    push();
-    tint(255, p_coord*3.5); // Display at half opacity
-    image(sAlta, width / 2, height / 2, sAlta.width/3 , sAlta.height/3 );
-    pop();
-  } else if(keyIsDown(ENTER) && i % 2 == 0){//abbassa la sciarpa
-    input_utente = 0;
-    image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
-  }else{
-    input_utente = 0;
-    image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
-  }
+
 
 
   textSize(16);
   fill('#B7AEB5'); //3 PALETTE
   //ICONA FEEDBACK DA SEGUIRE
   if (i % 2 != 0 && i > 3) {
-  image(sciarpaBIcon, w * 10 , h * 25, sciarpaBIcon.width / 6, sciarpaBIcon.height / 6);//scura
-  feed_piattaforma++;
-  } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
-    image(sciarpaIcon, w * 10 , h * 25, sciarpaIcon.width / 6, sciarpaIcon.height / 6); // trombetta scura
+    image(sciarpaBIcon, w * 10, h * 25, sciarpaBIcon.width / 6, sciarpaBIcon.height / 6); //chiara
     feed_piattaforma = 0;
+  } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
+    image(sciarpaIcon, w * 10, h * 25, sciarpaIcon.width / 6, sciarpaIcon.height / 6); // scura
+    feed_piattaforma++;
   }
 
   //rettangolo in opacità
@@ -179,16 +164,40 @@ function draw() {
   pop();
 
   //TUTORIAL sciarpa
+
   if (i == 0 || i == 2) {
     image(tut2Icon, w * 10, h * 24.5, tut2Icon.width / 4, tut2Icon.height / 4);
-    text('PORTA IN ALTO' , w * 10, h * 31.5);
+    text('PORTA IN ALTO', w * 10, h * 31.5);
     text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
-    image(sAlta, width / 2, height / 2, sAlta.width/3 , sAlta.height/3 );
+    if (keyIsDown(ENTER)) {
+      text('COORDINATO', w * 10, h * 33);
+      p_coord = 70;
+    }
   } else if (i == 1 || i == 3) {
-    image(tut1Icon, w * 10, h * 24.5, tut1Icon.width / 4, tut1Icon.height /4);
+    image(tut1Icon, w * 10, h * 24.5, tut1Icon.width / 4, tut1Icon.height / 4);
     text('PORTA IN BASSO', w * 10, h * 31.5);
     text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
-    image(sBassa, width / 2, height / 2, sBassa.width/3 , sBassa.height/3 );
+
+    if (keyIsDown(ENTER)) {
+      text('NON COORDINATO', w * 10, h * 33);
+      p_coord = 70;
+    }
+  }
+
+
+  // FEED UTENTE (PALLINI COLORATI)
+  if (keyIsDown(ENTER) && i % 2 == 0) { //alza la sciarpa
+    input_utente = 200;
+    push();
+    tint(255, p_coord * 3.5); // Display at half opacity
+    image(sAlta, width / 2, height / 2, sAlta.width / 3, sAlta.height / 3);
+    pop();
+  } else if (keyIsDown(ENTER) && i % 2 != 0) { //abbassa la sciarpa
+    input_utente = 0;
+    image(sBassa, width / 2, height / 2, sBassa.width / 3, sBassa.height / 3);
+  } else {
+    input_utente = 0;
+    image(sBassa, width / 2, height / 2, sBassa.width / 3, sBassa.height / 3);
   }
 
 }
