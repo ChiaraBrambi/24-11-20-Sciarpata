@@ -1,5 +1,5 @@
 //trombetta ICONE
-let sciarpaIcon, sciarpaBIcon, tut1Icon, tut2Icon, logor, freccia, sAlta, sBassa;; //icone
+let sciarpaIcon, sciarpaBIcon, tut1Icon, tutIcon, logor, freccia, sAlta, sBassa;; //icone
 let xBarra = 20; //lunghezza barra %
 let w, h; //posizione
 let s = 0; //ellisse BONUS
@@ -20,8 +20,8 @@ let pronto //coordinzaione tutorial
 function preload() {
   sciarpaBIcon = loadImage("./assets/immagini/sciarpa.png"); //sciarpa vuota bianca
   sciarpaIcon = loadImage("./assets/immagini/sciarpaViola.png"); //sciarpa scura
-  tut1Icon = loadImage("./assets/immagini/Tutorial_Down.gif");
-  tut2Icon = loadImage("./assets/immagini/Tutorial_Up.gif");
+  tutIcon = loadImage("./assets/immagini/Tutorial-sciarpa-giu.gif");
+  tut1Icon = loadImage("./assets/immagini/Tutorial-sciarpa-su.gif");
   logor = loadImage("./assets/immagini/logopiccolo.png"); //logo ridotto
   freccia = loadImage("./assets/immagini/freccia.png");
   sAlta = loadImage("./assets/immagini/Sciarpa_su.png");
@@ -145,9 +145,11 @@ function draw() {
   fill('#B7AEB5'); //3 PALETTE
   //ICONA FEEDBACK DA SEGUIRE
   if (i % 2 != 0 && i > 3) {
+
     image(sciarpaBIcon, w * 10, h * 25, sciarpaBIcon.width / 6, sciarpaBIcon.height / 6); //chiara
     feed_piattaforma = 0;
   } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
+  //  document.getElementById("tutorial2").style.display = "none";
     image(sciarpaIcon, w * 10, h * 25, sciarpaIcon.width / 6, sciarpaIcon.height / 6); // scura
     feed_piattaforma++;
   }
@@ -166,20 +168,25 @@ function draw() {
   //TUTORIAL sciarpa
 
   if (i == 0 || i == 2) {
-    image(tut2Icon, w * 10, h * 24.5, tut2Icon.width / 4, tut2Icon.height / 4);
-    text('PORTA IN ALTO', w * 10, h * 31.5);
+    // document.getElementById("tutorial").style.display = "block";
+    // document.getElementById("tutorial2").style.display = "none";
+    image(tut1Icon, w * 10, h * 24.5, tut1Icon.width / 5, tut1Icon.height / 5);
+    tutIcon.reset();
     text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
     if (keyIsDown(ENTER)) {
-      text('COORDINATO', w * 10, h * 33);
+      text('COORDINATO', w * 10, h * 31.5);
       p_coord = 70;
     }
   } else if (i == 1 || i == 3) {
-    image(tut1Icon, w * 10, h * 24.5, tut1Icon.width / 4, tut1Icon.height / 4);
-    text('PORTA IN BASSO', w * 10, h * 31.5);
+
+    image(tutIcon, w * 10, h * 24.5, tutIcon.width / 5, tutIcon.height / 5);
+    tut1Icon.reset();
+    // document.getElementById("tutorial2").style.display = "block";
+    // document.getElementById("tutorial").style.display = "none";
     text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
 
     if (keyIsDown(ENTER)) {
-      text('NON COORDINATO', w * 10, h * 33);
+      text('NON COORDINATO', w * 10, h * 31.5);
       p_coord = 70;
     }
   }
@@ -187,6 +194,8 @@ function draw() {
 
   // FEED UTENTE (PALLINI COLORATI)
   if (keyIsDown(ENTER) && i % 2 == 0) { //alza la sciarpa
+
+
     input_utente = 200;
     push();
     tint(255, p_coord * 3.5); // Display at half opacity
