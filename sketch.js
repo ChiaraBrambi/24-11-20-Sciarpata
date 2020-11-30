@@ -71,10 +71,10 @@ function draw() {
   fill('#D5D0D3'); //barra grigia
   rectMode(CENTER);
   rect(w * 10, h * 45.5, width / 3.5, 15, 20); //rect(x,y,w,h,[tl])
-  if (i>3){
+  if (i > 3) {
     xBarra = ((width / 3.5) / 100) * p_coord; //altezza barra %, xTot= 439 = width / 3.5
-  } else{
-    xBarra =0;
+  } else {
+    xBarra = 0;
   }
 
   push();
@@ -175,7 +175,7 @@ function draw() {
   if (i == 0 || i == 2) {
 
     document.getElementById("tutorial").style.display = "block";
-    document.getElementById("tutorial2").src="./assets/immagini/Tutorial-sciarpa-giu.gif";
+    document.getElementById("tutorial2").src = "./assets/immagini/Tutorial-sciarpa-giu.gif";
     document.getElementById("tutorial2").style.display = "none";
     // image(tut1Icon, w * 10, h * 24.5, tut1Icon.width / 5, tut1Icon.height / 5);
     // tutIcon.reset();
@@ -187,7 +187,7 @@ function draw() {
   } else if (i == 1 || i == 3) {
     // image(tutIcon, w * 10, h * 24.5, tutIcon.width / 5, tutIcon.height / 5);
     // tut1Icon.reset();
-    document.getElementById("tutorial").src="./assets/immagini/Tutorial-sciarpa-su.gif";
+    document.getElementById("tutorial").src = "./assets/immagini/Tutorial-sciarpa-su.gif";
     document.getElementById("tutorial2").style.display = "block";
     document.getElementById("tutorial").style.display = "none";
 
