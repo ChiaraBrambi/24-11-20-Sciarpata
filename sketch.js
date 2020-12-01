@@ -16,80 +16,41 @@ let input_utente = 200 //var utente usa la trobetta, preme bottone
 let opacità = 210 //opacità rettangolo tutorial
 let pronto //coordinzaione tutorial
 
-/////////////////////////////////////////////////////////////////////////
-//per selezionare tutto ctrl+shift+7
+// teachable machine
+// https://www.npmjs.com/package/@teachablemachine/pose/v/0.8.4
+// https://editor.p5js.org/shmanfredi/sketches/y6u7bz5C1
 
-// // Teachable Machine
-// // The Coding Train / Daniel Shiffman
-// // https://thecodingtrain.com/TeachableMachine/1-teachable-machine.html
-// // https://editor.p5js.org/codingtrain/sketches/PoZXqbu4v
-//
-// // The video
-// let video;
-// // For displaying the label
-// let label = "waiting...";
-// // The classifier
-// let classifier;
-// let modelURL = 'https://storage.googleapis.com/tm-models/YadBJmj5/';
-//
-// // STEP 1: Load the model!
-// function preload() {
-//   classifier = ml5.imageClassifier(modelURL + 'model.json');
-// }
-//
-//
-// function setup() {
-//   createCanvas(640, 520);
-//   // Create the video
-//   video = createCapture(VIDEO);
-//   video.hide();
-//   // STEP 2: Start classifying
-//   classifyVideo();
-// }
-//
-// // STEP 2 classify the videeo!
-// function classifyVideo() {
-//   classifier.classify(video, gotResults);
-// }
-//
-// function draw() {
-//   background(0);
-//
-//   // Draw the video
-//   image(video, 0, 0);
-//
-//   // STEP 4: Draw the label
-//   textSize(32);
-//   textAlign(CENTER, CENTER);
-//   fill(255);
-//   text(label, width / 2, height - 16);
-//
-//   // Pick an emoji, the "default" is train
-//   let emoji = "🚂";
-//   if (label == "Rainbow") {
-//     emoji = "🌈";
-//   } else if (label == "Unicorn") {
-//     emoji = "🦄";
-//   } else if (label == "Ukulele") {
-//     emoji = "🎸";
-//   }
-//
-//   // Draw the emoji
-//   textSize(256);
-//   text(emoji, width / 2, height / 2);
-// }
-//
-// // STEP 3: Get the classification!
-// function gotResults(error, results) {
-//   // Something went wrong!
-//   if (error) {
-//     console.error(error);
-//     return;
-//   }
-//   // Store the label and classify again!
-//   label = results[0].label;
-//   classifyVideo();
-// }
+const URL = "https://storage.googleapis.com/tm-model/V-k69BewR/";
+
+let model, capture, topPrediction, numClasses, poseData, context
+
+async function init() {
+  const modelURL = URL + "model.json";
+  const metadataURL = URL + "metadata.json";
+  model = await tmPose.load(modelURL, metadataURL);
+  numClasses = model.getTotalClasses();
+}
+
+async function predict() {
+  const {
+    pose,
+    posenetOutput
+  } = await model.estimatePose(capture.elt)
+
+  const predictions = await model.predict(posenetOutput)
+  let highestProbability = 0
+  let highestIndex
+  predictions.forEach((item, index) => {
+    if (item.probability > highestProbability) {
+      highestProbability = item.probability
+      highestIndex = index
+    }
+  })
+
+  poseData = pose
+  topPrediction = predictions[highestIndex].className
+
+}
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -109,6 +70,10 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(15); //rallenta
 
+  capture = createCapture(VIDEO)
+  capture.hide()
+
+  init()
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -206,7 +171,7 @@ function draw() {
   }
 
   //PER LA BARRA DELLA PERCENTUALE
-  if (keyIsDown(ENTER) && i % 2 == 0) {
+  if (topPrediction == 'up' && i % 2 == 0) {
     p_coord = round((feed_piattaforma * input_utente) / 100);
   } else {
     p_coord = 0;
@@ -256,7 +221,7 @@ function draw() {
     // image(tut1Icon, w * 10, h * 24.5, tut1Icon.width / 5, tut1Icon.height / 5);
     // tutIcon.reset();
     text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
-    if (keyIsDown(ENTER)) {
+    if (topPrediction == 'up') {
       text('CORRETTO', w * 10, h * 31.5);
       p_coord = 70;
     }
@@ -269,7 +234,7 @@ function draw() {
 
     text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
 
-    if (keyIsDown(ENTER)) {
+    if (topPrediction == 'up') {
       text('NON COORDINATO', w * 10, h * 31.5);
       p_coord = 70;
     }
@@ -277,7 +242,7 @@ function draw() {
 
 
   // FEED UTENTE (PALLINI COLORATI)
-  if (keyIsDown(ENTER) && i % 2 == 0) { //alza la sciarpa
+  if (topPrediction == 'up' && i % 2 == 0) { //alza la sciarpa
 
 
     input_utente = 200;
@@ -285,15 +250,23 @@ function draw() {
     tint(255, p_coord * 3.5); // Display at half opacity
     image(sAlta, width / 2, height / 2, sAlta.width / 3, sAlta.height / 3);
     pop();
-  } else if (keyIsDown(ENTER) && i % 2 != 0) { //abbassa la sciarpa
+
+    predict()
+  } else if (topPrediction == 'up' && i % 2 != 0) { //abbassa la sciarpa
     input_utente = 0;
     image(sBassa, width / 2, height / 2, sBassa.width / 3, sBassa.height / 3);
+
+    predict()
   } else {
     input_utente = 0;
     image(sBassa, width / 2, height / 2, sBassa.width / 3, sBassa.height / 3);
-  }
 
+    predict()
+  }
+console.log (topPrediction);
 }
+
+
 ///////FINE DRAW/////////////////////////////////////////////////////
 
 //funzione trombetta
