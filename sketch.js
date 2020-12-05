@@ -16,10 +16,10 @@ let input_utente = 200 //var utente usa la trobetta, preme bottone
 let opacità = 210 //opacità rettangolo tutorial
 let pronto //coordinzaione tutorial
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // teachable machine
 // https://www.npmjs.com/package/@teachablemachine/pose/v/0.8.4
 // https://editor.p5js.org/shmanfredi/sketches/y6u7bz5C1
-
 const URL = "https://storage.googleapis.com/tm-model/V-k69BewR/";
 
 let model, capture, topPrediction, numClasses, poseData, context
@@ -72,7 +72,6 @@ function setup() {
 
   capture = createCapture(VIDEO)
   capture.hide()
-
   init()
 }
 
@@ -176,6 +175,7 @@ function draw() {
   } else {
     p_coord = 0;
   }
+  console.log(feed_piattaforma);
 
   //PERCENTUALE
   push();
@@ -183,9 +183,6 @@ function draw() {
   fill('#B7AEB5'); //3° PALETTE
   text('COORDINAZIONE  ' + p_coord + ' %', w * 10, h * 43);
   pop();
-
-
-
 
   textSize(16);
   fill('#B7AEB5'); //3 PALETTE
@@ -197,7 +194,8 @@ function draw() {
   } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
     document.getElementById("tutorial2").style.display = "none";
     image(sciarpaIcon, w * 10, h * 25, sciarpaIcon.width / 6, sciarpaIcon.height / 6); // scura
-    feed_piattaforma++;
+    if (topPrediction == 'up'){
+      feed_piattaforma++;}
   }
 
   //rettangolo in opacità
@@ -218,21 +216,17 @@ function draw() {
     document.getElementById("tutorial").style.display = "block";
     document.getElementById("tutorial2").src = "./assets/immagini/Tutorial-sciarpa-giu.gif";
     document.getElementById("tutorial2").style.display = "none";
-    // image(tut1Icon, w * 10, h * 24.5, tut1Icon.width / 5, tut1Icon.height / 5);
-    // tutIcon.reset();
-    text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
+    text('Alzala quando richiesto', w * 10, h * 29.5);
     if (topPrediction == 'up') {
       text('CORRETTO', w * 10, h * 31.5);
       p_coord = 70;
     }
   } else if (i == 1 || i == 3) {
-    // image(tutIcon, w * 10, h * 24.5, tutIcon.width / 5, tutIcon.height / 5);
-    // tut1Icon.reset();
     document.getElementById("tutorial").src = "./assets/immagini/Tutorial-sciarpa-su.gif";
     document.getElementById("tutorial2").style.display = "block";
     document.getElementById("tutorial").style.display = "none";
 
-    text('Unisciti al ritmo degli altri', w * 10, h * 29.5);
+    text('Porta in basso la sciarpa', w * 10, h * 29.5);
 
     if (topPrediction == 'up') {
       text('NON COORDINATO', w * 10, h * 31.5);
@@ -247,7 +241,8 @@ function draw() {
 
     input_utente = 200;
     push();
-    tint(255, p_coord * 3.5); // Display at half opacity
+    var z= 25 + p_coord;
+    tint(255, z * 3.5); // Display at half opacity
     image(sAlta, width / 2, height / 2, sAlta.width / 3, sAlta.height / 3);
     pop();
 
@@ -263,7 +258,7 @@ function draw() {
 
     predict()
   }
-console.log (topPrediction);
+//console.log (topPrediction);
 }
 
 
