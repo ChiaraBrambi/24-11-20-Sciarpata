@@ -165,16 +165,20 @@ function draw() {
   ///////////////////////////////////////////////////////////////
 
   //CONTATORE i DEL TEMPO
-  if (frameCount % 50 == 0) { //multiplo di 50 incrementa i
+  if (frameCount % 30 == 0) { //multiplo di 50 incrementa i
     i++
   }
 
   //PER LA BARRA DELLA PERCENTUALE
   if (topPrediction == 'up' && i % 2 == 0) {
-    p_coord = round((feed_piattaforma * input_utente) / 100);
-  } else {
+    if (p_coord > 100){
+      p_coord = 100;
+    }else{ p_coord = round((feed_piattaforma * input_utente) / 100);
+  }
+}else {
     p_coord = 0;
   }
+
   console.log(feed_piattaforma);
 
   //PERCENTUALE
@@ -195,7 +199,9 @@ function draw() {
     document.getElementById("tutorial2").style.display = "none";
     image(sciarpaIcon, w * 10, h * 25, sciarpaIcon.width / 6, sciarpaIcon.height / 6); // scura
     if (topPrediction == 'up'){
-      feed_piattaforma++;}
+      feed_piattaforma++;
+
+    }
   }
 
   //rettangolo in opacità
@@ -239,7 +245,7 @@ function draw() {
   if (topPrediction == 'up' && i % 2 == 0) { //alza la sciarpa
 
 
-    input_utente = 200;
+    input_utente = 420;
     push();
     var z= 25 + p_coord;
     tint(255, z * 3.5); // Display at half opacity
