@@ -81,7 +81,6 @@ function preload() {
 /////////////////////////////////////////////////////////////////////////
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  frameRate(15); //rallenta
 
   capture = createCapture(VIDEO)
   capture.hide()
@@ -90,6 +89,12 @@ function setup() {
 
 /////////////////////////////////////////////////////////////////////////
 function draw() {
+
+  //CONTATORE i DEL TEMPO
+  if (frameCount % 50 == 0) { //multiplo di 50 incrementa i
+    i++
+  }
+
   background('#F9F9F9'); //chiaro
   imageMode(CENTER); //per pittogrammi
   noStroke();
@@ -177,21 +182,13 @@ function draw() {
   }
   ///////////////////////////////////////////////////////////////
 
-  //CONTATORE i DEL TEMPO
-  if (frameCount % 30 == 0) { //multiplo di 50 incrementa i
-    i++
-  }
 
   //PER LA BARRA DELLA PERCENTUALE
   if (topPrediction == 'up' && i % 2 == 0) {
-    if (p_coord > 100){
-      p_coord = 100;
-    }else{ p_coord = round((feed_piattaforma * input_utente) / 100);
-  }
-}else {
+    p_coord = round((feed_piattaforma * input_utente) / 100);
+  } else {
     p_coord = 0;
   }
-
   console.log(feed_piattaforma);
 
   //PERCENTUALE
@@ -211,10 +208,9 @@ function draw() {
   } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
     document.getElementById("tutorial2").style.display = "none";
     image(sciarpaIcon, w * 10, h * 25, sciarpaIcon.width / 6, sciarpaIcon.height / 6); // scura
-    if (topPrediction == 'up'){
+    //if (topPrediction == 'up') {
       feed_piattaforma++;
-
-    }
+    //}
   }
 
   //rettangolo in opacità
@@ -258,9 +254,9 @@ function draw() {
   if (topPrediction == 'up' && i % 2 == 0) { //alza la sciarpa
 
 
-    input_utente = 420;
+    input_utente = 200;
     push();
-    var z= 25 + p_coord;
+    var z = 25 + p_coord;
     tint(255, z * 3.5); // Display at half opacity
     image(sAlta, width / 2, height / 2, sAlta.width / 3, sAlta.height / 3);
     pop();
@@ -277,30 +273,31 @@ function draw() {
 
     predict()
   }
-//console.log (topPrediction);
+  //console.log (topPrediction);
 
 
-//DASPO
-//daspo condizione
-if (topPrediction == 'up' && i % 2 != 0 && i > 3) {
-  daspo = true;
-  } else if (topPrediction == 'up' && i % 2 == 0 && i > 3 && daspo != true) {
-  daspo = false;
-  op = 0;
+  //DASPO
+  //daspo condizione
+  if (topPrediction == 'up' && i % 2 != 0 && i > 3) {
+    daspo = true;
+  } else if (topPrediction == 'up' && i % 2 == 0 && i > 3) { //&& daspo != true
+    daspo = false;
+    op = 0;//CHE ROBA è?
+  }
+
+  if (daspo == true) {
+    daspoAttiva();
+  }
+
+  incremento_daspo = 3000 + (daspo_counter/46)*1000;
+  if (incremento_daspo > 5000){
+    incremento_daspo = 5000;
+  }
+
+  console.log("tempo daspo " + incremento_daspo)
+
+
 }
-
-if (daspo == true) {
-  daspoAttiva();
-}
-
-incremento_daspo = 3000 + (daspo_counter/46)*1000;
-if (incremento_daspo > 5000){
-  incremento_daspo = 5000;
-}
-
-console.log("tempo daspo " + incremento_daspo)
-}
-
 
 ///////FINE DRAW/////////////////////////////////////////////////////
 
