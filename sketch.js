@@ -208,9 +208,9 @@ function draw() {
   } else if (i % 2 == 0 && i > 3) { //cambio colore delle bottone centrale: feedback utente
     document.getElementById("tutorial2").style.display = "none";
     image(sciarpaIcon, w * 10, h * 25, sciarpaIcon.width / 6, sciarpaIcon.height / 6); // scura
-    //if (topPrediction == 'up') {
+    if (topPrediction == 'up') {
       feed_piattaforma++;
-    //}
+    }
   }
 
   //rettangolo in opacità
